@@ -26,7 +26,7 @@ WireframeMesh_Two.prototype.render = function(canvas, transform)
         //       matrix to every vertex before projection.
 
         // apply transform
-        
+
         // projected points
         var xy1 = [xyz1[0], xyz1[1]];
         var xy2 = [xyz2[0], xyz2[1]];
@@ -73,8 +73,8 @@ Task2.prototype.render = function(canvas, w, h)
     var transPos = SimpleMatrix.translate(-3, 0, 13);//100, 100, 0.5);
     var transAnim = SimpleMatrix.translate(Math.sin(Date.now() / 1000), Math.cos(Date.now() / 1000), 0);
 
-    var rotMeshAnim = SimpleMatrix.rotate(Date.now()/30, 1, 1, 1);
-    var rotMeshPos = SimpleMatrix.translate(3, 0, 13);
+    var rotAnim = SimpleMatrix.rotate(Date.now()/30, 1, 1, 1);
+    var rotPos = SimpleMatrix.translate(3, 0, 13);
 
     var scaleMeshTransform = new SimpleMatrix();
     var transMeshTransform = new SimpleMatrix();
