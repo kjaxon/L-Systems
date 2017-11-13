@@ -12,22 +12,23 @@ Bone.prototype.setJointAngle = function(angle) {
 }
 
 Bone.prototype.computePoseMatrix = function() {
-    var pose = new SimpleMatrix();
-    // TODO: Compute the pose matrix of this point (i.e. transformation matrix
-    //       with translation+rotation, but no scaling) and return it.
-    //       The matrix should translate by this.position and rotate around this.jointAxis
-    //       at this.jointLocation by this.jointAngle
+
+    var R = rotateAroundAxisAtPoint(this.jointAxis, this.jointAngle, this.jointLocation);
+    var T = SimpleMatrix.translate(this.position[0], this.position[1], this.position[2]);
+    var pose = SimpleMatrix.multiply(T, R);
 
     //       If this.parent is not null, you should also apply the pose matrix of the parent
     //       to get a hierarchical transform.
+    if (this.parent != null) {
+      pose =  SimpleMatrix.multiply(this.parent.computePoseMatrix(), pose);
+    }
     return pose;
 }
 
 Bone.prototype.computeModelMatrix = function() {
     var pose = new SimpleMatrix();
-    // TODO: Compute the model matrix of this bone (i.e. pose matrix + scaling)
-    //       and return it.
-    //       Use this.computePoseMatrix and this.scale to build the matrix
+    var S = SimpleMatrix.scale(this.scale[0], this.scale[1], this.scale[2]);
+    pose = SimpleMatrix.multiply(this.computePoseMatrix(), S);
     return pose;
 }
 
@@ -58,9 +59,8 @@ Task4.prototype.render = function(canvas, w, h) {
     for (var i = 0; i < this.bones.length; ++i) {
         var boneTransform = new SimpleMatrix();
 
-        // TODO: Calculate the correct transform for the bone.
-        //       Hint: Use your view matrix and the computeModelMatrix method.
-
+        boneTransform = SimpleMatrix.multiply(view, this.bones[i].computeModelMatrix());
+        
         this.mesh.render(canvas, boneTransform);
     }
 }

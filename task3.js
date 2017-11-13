@@ -1,11 +1,12 @@
 function rotateAroundAxisAtPoint(axis, angle, point)
 {
-    var mat = new SimpleMatrix();
-    // TODO: Build a transformation matrix that rotates around a given axis
-    //       by the given angle at the given point.
-    //       Hint: You will need SimpleMatrix.translate and SimpleMatrix.rotate
-    //       Hint: axis and point are arrays. Use axis[0], axis[1], etc.
-    //             to get their components
+    var R = SimpleMatrix.rotate(angle, axis[0], axis[1], axis[2]);
+    var x =  point[0], y = point[1], z = point[2];
+    var T = SimpleMatrix.translate(x, y, z);
+    var TInverse = SimpleMatrix.translate(-x, -y, -z);
+
+    var mat = SimpleMatrix.multiply(SimpleMatrix.multiply(T, R), TInverse);
+
     return mat;
 }
 

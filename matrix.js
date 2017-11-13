@@ -70,28 +70,119 @@ SimpleMatrix.multiply = function(left, right) {
 SimpleMatrix.scale = function(x, y, z)
 {
     matrix = new SimpleMatrix();
-    // TODO: Create and return a Scale Matrix
+    var m = matrix.m;
+    m[0] = x;
+    m[5] = y;
+    m[10] = z;
+
     return matrix;
 };
 
 SimpleMatrix.translate = function(x, y, z) {
     matrix = new SimpleMatrix();
-    // TODO: Create and return a Translation Matrix
+    var m = matrix.m;
+    m[3] = x;
+    m[7] = y;
+    m[11] = z;
+
     return matrix;
 };
 
+function getRotationMatrix(a, x, y, z) {
+  a *= Math.PI/180;
+  matrix = new SimpleMatrix();
+  var m = matrix.m;
+  if (x == 1) {
+    m[5] = Math.cos(a);
+    m[10] = Math.cos(a);
+    m[9] = Math.sin(a);
+    m[6] = -Math.sin(a);
+  } else if (y == 1) {
+    m[0] = Math.cos(a);
+    m[2] = Math.sin(a);
+    m[8] = -Math.sin(a);
+    m[10] = Math.cos(a);
+  } else {
+    m[0] = Math.cos(a);
+    m[1] = Math.sin(a);
+    m[4] = -Math.sin(a);
+    m[5] = Math.cos(a);
+  }
+  return matrix;
+}
+
+function getUnitVector(vector) {
+  var x = vector[0], y = vector[1], z = vector[2];
+  var magnitude = Math.sqrt((Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2)));
+  var unitVector = [x/magnitude, y/magnitude, z/magnitude];
+  return unitVector;
+}
+
+function getTVector(vector) {
+  var tVector = vector.slice();
+  var x = tVector[0], y = tVector[1], z = tVector[2];
+  var smallestMagnitude = Math.min(Math.min(Math.abs(x), Math.abs(y)), Math.abs(z));
+  for (var i = 0; i < tVector.length; i++) {
+    if (Math.abs(vector[i]) == smallestMagnitude) {
+      tVector[i] = 1;
+      return tVector;
+    }
+  }
+  return tVector;
+}
+
+function crossProductVector(left, right){
+  var crossProduct = [
+    left[1] * right[2] - left[2] * right[1],
+    left[2] * right[0] - left[0] * right[2],
+    left[0] * right[1] - left[1] * right[0],
+  ]
+  return crossProduct;
+}
+
 SimpleMatrix.rotate = function(a, x, y, z) {
-    matrix = new SimpleMatrix();
-    // TODO: Create and return a Rotation Matrix
-    return matrix;
+  if (x == 1 && y == 0 && z == 0) {
+    return getRotationMatrix(a, 1, 0, 0);
+  } else if ( x == 0 && y == 1 && z == 0) {
+    return getRotationMatrix(a, 0, 1, 0);
+  } else if ( x == 0 && y == 0 && z == 1) {
+    return getRotationMatrix(a, 0, 0, 1);
+  } else {
+    var w = getUnitVector([x, y, z]);
+    var t = getTVector(w);
+    var u = getUnitVector(crossProductVector(t, w));
+    var v = crossProductVector(u, w);
+
+    var orthonormalBasis = new SimpleMatrix();
+    orthonormalBasis.m = [
+      u[0], u[1], u[2], 0,
+      v[0], v[1], v[2], 0,
+      w[0], w[1], w[2], 0,
+      0,   0,     0,    1
+    ];
+    var canonicalBasis = new SimpleMatrix();
+    canonicalBasis.m = [
+      u[0], v[0], w[0], 0,
+      u[1], v[1], w[1], 0,
+      u[2], v[2], w[2], 0,
+      0,    0,    0,    1
+    ];
+    var Rz = getRotationMatrix(a, 0, 0, 1);
+    var rotationMatrix =
+      this.multiply(
+        this.multiply(canonicalBasis, Rz), orthonormalBasis);
+    return rotationMatrix;
+
+  }
 }
 
 
 SimpleMatrix.multiplyVector = function(matrix, vector)
 {
-    newVector = [0, 0, 0];
-    // TODO: Implement Matrix Vector multiplication
-    // Hint: Treat the incoming vector data as a 4-vec with 1 as the 4th component
-    // Hint: For this assignment you only need the x,y,z components of the product
+    var m = matrix.m;
+    var newVector = [0, 0, 0];
+    newVector[0] = m[0] * vector[0] + m[1] * vector[1] + m[2] * vector[2] + m[3] * 1;
+    newVector[1] = m[4] * vector[0] + m[5] * vector[1] + m[6] * vector[2] + m[7] * 1;
+    newVector[2] = m[8] * vector[0] + m[9] * vector[1] + m[10] * vector[2] + m[11] * 1;
     return newVector;
 }

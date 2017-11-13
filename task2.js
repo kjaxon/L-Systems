@@ -22,10 +22,15 @@ WireframeMesh_Two.prototype.render = function(canvas, transform)
         var xyz1 = this.vertex(index1);
         var xyz2 = this.vertex(index2);
 
-        // TODO: Modify your render implementation from before to apply the transform
-        //       matrix to every vertex before projection.
-
         // apply transform
+        xyz1 = SimpleMatrix.multiplyVector(transform, xyz1);
+        xyz2 = SimpleMatrix.multiplyVector(transform, xyz2);
+
+        xyz1[0] = xyz1[0]/xyz1[2];
+        xyz1[1] = xyz1[1]/xyz1[2];
+        xyz2[0] = xyz2[0]/xyz2[2];
+        xyz2[1] = xyz2[1]/xyz2[2];
+
 
         // projected points
         var xy1 = [xyz1[0], xyz1[1]];
@@ -53,8 +58,8 @@ var Task2 = function(canvas)
 
 function clear(context, w, h)
 {
-    // TODO: Clear the entire canvas to white
-    //       Hint: Look up context.fillRect
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, w, h);
 }
 
 Task2.prototype.render = function(canvas, w, h)
@@ -80,9 +85,22 @@ Task2.prototype.render = function(canvas, w, h)
     var transMeshTransform = new SimpleMatrix();
     var rotMeshTransform = new SimpleMatrix();
 
-    // TODO: Implement the correct transforms for each animation given their
-    //       individual matrices.
-    //       Hint: Don't forget to multiply your camera view matrix in too.
+    scaleMeshTransform =
+      SimpleMatrix.multiply(
+        SimpleMatrix.multiply(cameraView, scaleAnim), scaleMeshTransform);
+
+    transMeshTransform =
+      SimpleMatrix.multiply(
+        SimpleMatrix.multiply(
+          cameraView,
+          SimpleMatrix.multiply(transAnim, transPos)),
+          transMeshTransform);
+
+    rotMeshTransform =
+      SimpleMatrix.multiply(
+        SimpleMatrix.multiply(cameraView,
+          SimpleMatrix.multiply(rotPos, rotAnim)),
+          rotMeshTransform);
 
     this.scaleMesh.render(canvas, scaleMeshTransform);
     this.transMesh.render(canvas, transMeshTransform);

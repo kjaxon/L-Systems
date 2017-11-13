@@ -22,8 +22,10 @@ WireframeMesh.prototype.render = function(canvas)
         var xyz1 = this.vertex(index1);
         var xyz2 = this.vertex(index2);
 
-        // TODO: Implement a simple perspective projection by dividing the x and
-        //       y components by the z component.
+        xyz1[0] = xyz1[0]/xyz1[2];
+        xyz1[1] = xyz1[1]/xyz1[2];
+        xyz2[0] = xyz2[0]/xyz2[2];
+        xyz2[1] = xyz2[1]/xyz2[2];
 
         // projected points
         var xy1 = [xyz1[0], xyz1[1]];
