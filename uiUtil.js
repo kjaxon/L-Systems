@@ -1,3 +1,6 @@
+//TODO: add INPUT constructor here, follow the outline of the Slider below, I think the important inputs
+// to input is the targetId, hasLabel, and callback function
+
 Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback) {
     var target = document.getElementById(targetId);
     if (!target)
@@ -64,7 +67,7 @@ Slider.prototype.setValue = function(value) {
     }
 }
 
-Slider.prototype.setPosition = function(position) {
+sSlider.prototype.setPosition = function(position) {
     this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
 }
 

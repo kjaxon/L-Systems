@@ -64,9 +64,6 @@ function clear(context, w, h)
 
 Task2.prototype.render = function(canvas, w, h)
 {
-    // TODO: To complete this task fully you must implement the following methods in matrix.js:
-    //       scale, translate, rotate, multiplyVector.
-    //       Matrix multiplication has been implemented for you.
 
     var context = canvas.getContext('2d');
     clear(context, w, h);

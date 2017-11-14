@@ -1,3 +1,7 @@
+// TODO: store data and do all the computation such as production here.
+// axiom should be a string, rules should be a dictionary, look at sketch.js to see how things are stored
+
+
 var Bone = function(parent, position, scale, jointLocation, jointAxis) {
     this.parent = parent;
     this.position = position;
