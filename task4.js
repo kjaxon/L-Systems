@@ -1,6 +1,52 @@
 // TODO: store data and do all the computation such as production here.
 // axiom should be a string, rules should be a dictionary, look at sketch.js to see how things are stored
 
+var Lsystem = function(axiom, rules, angle, iterations) {
+    this.axiom = axiom;
+    this.rules = rules;
+    this.angle = Math.PI/180 * angle;
+    this.length = 2;
+    this.lstring = "";
+    this.iterations = iterations;
+}
+
+Lsystem.prototype.generateString = function() {
+    var axiomAtLevel = this.axiom;
+    for (var i = 0; i < this.iterations; i++) {
+        var acc = "";
+        for (var j  = 0; j < axiomAtLevel.length; j++) {
+            var curr = axiomAtLevel.charAt(j);
+            if ( curr in this.rules) {
+                acc+=this.rules[curr];
+            } else {
+                acc+=curr;
+            }
+        }
+        axiomAtLevel = acc;
+    }
+    this.lstring = axiomAtLevel;
+}
+
+
+Lsystem.prototype.draw = function(canvas, w, h) {
+    var context = canvas.getContext('2d');
+    var turtle = new Turtle(w/2, h/2, 0,  context);
+    for (var i = 0; i < this.lstring.length; i++) {
+        var letter = this.lstring.charAt(i);
+        if (letter == 'F') {
+            turtle.forward(this.length);
+        } else if (letter == "+") {
+            turtle.turnLeft(this.angle);
+        } else if (letter == "-") {
+            turtle.turnRight(this.angle);
+        } else if (letter == "[") {
+            turtle.push();
+        } else if (letter == "]") {
+            turtle.pop();
+        }
+    }
+
+}
 
 var Bone = function(parent, position, scale, jointLocation, jointAxis) {
     this.parent = parent;
@@ -37,15 +83,22 @@ Bone.prototype.computeModelMatrix = function() {
 }
 
 var Task4 = function(canvas) {
-    this.cameraAngle = 0;
-    this.mesh = new WireframeMesh_Two(WireCubePositions, WireCubeIndices);
+    // this.cameraAngle = 0;
+    // this.mesh = new WireframeMesh_Two(WireCubePositions, WireCubeIndices);
+    //
+    // var hip       = new Bone(     null, [0,    1.5, 0  ], [0.5,  0.3, 0.2], [0, 0,    0   ], [0, 1, 0]);
+    // var leftThigh = new Bone(      hip, [0.5, -1.1, 0.1], [0.1,  0.7, 0.1], [0, 0.7,  0   ], [1, 0, 0]);
+    // var leftShin  = new Bone(leftThigh, [0,   -1.5, 0  ], [0.1,  0.7, 0.1], [0, 0.7,  0   ], [1, 0, 0]);
+    // var leftFoot  = new Bone( leftShin, [0,   -0.9, 0.2], [0.15, 0.1, 0.3], [0, 0.1, -0.25], [1, 0, 0]);
+    //
+    // this.bones = [hip, leftThigh, leftShin, leftFoot];
 
-    var hip       = new Bone(     null, [0,    1.5, 0  ], [0.5,  0.3, 0.2], [0, 0,    0   ], [0, 1, 0]);
-    var leftThigh = new Bone(      hip, [0.5, -1.1, 0.1], [0.1,  0.7, 0.1], [0, 0.7,  0   ], [1, 0, 0]);
-    var leftShin  = new Bone(leftThigh, [0,   -1.5, 0  ], [0.1,  0.7, 0.1], [0, 0.7,  0   ], [1, 0, 0]);
-    var leftFoot  = new Bone( leftShin, [0,   -0.9, 0.2], [0.15, 0.1, 0.3], [0, 0.1, -0.25], [1, 0, 0]);
+    this.lsystem = null;
+}
 
-    this.bones = [hip, leftThigh, leftShin, leftFoot];
+Task4.prototype.setLsystem = function(lsystem) {
+    this.lsystem = lsystem;
+    lsystem.generateString();
 }
 
 Task4.prototype.setJointAngle = function(boneIndex, angle) {
@@ -55,18 +108,29 @@ Task4.prototype.setJointAngle = function(boneIndex, angle) {
 Task4.prototype.render = function(canvas, w, h) {
     var context = canvas.getContext('2d');
     clear(context, w, h);
+    // TODO: replace this with the actual l system
+    var axiom = "F-F-F-F";
+    var rule = {
+        'F': "FF-F-F-F-F-F+F"
+    };
 
-    var cameraView = SimpleMatrix.rotate(this.cameraAngle, 1, 0, 0);
-    var view = SimpleMatrix.translate(0, 0, -10);
-    view = SimpleMatrix.multiply(view, cameraView);
+    var lsystem = new Lsystem(axiom, rule, 90, 4);
+    this.setLsystem(lsystem);
+    this.lsystem.generateString();
+    console.log(this.lsystem.lstring);
+    this.lsystem.draw(canvas, w, h);
 
-    for (var i = 0; i < this.bones.length; ++i) {
-        var boneTransform = new SimpleMatrix();
-
-        boneTransform = SimpleMatrix.multiply(view, this.bones[i].computeModelMatrix());
-        
-        this.mesh.render(canvas, boneTransform);
-    }
+    // var cameraView = SimpleMatrix.rotate(this.cameraAngle, 1, 0, 0);
+    // var view = SimpleMatrix.translate(0, 0, -10);
+    // view = SimpleMatrix.multiply(view, cameraView);
+    //
+    // for (var i = 0; i < this.bones.length; ++i) {
+    //     var boneTransform = new SimpleMatrix();
+    //
+    //     boneTransform = SimpleMatrix.multiply(view, this.bones[i].computeModelMatrix());
+    //
+    //     this.mesh.render(canvas, boneTransform);
+    // }
 }
 
 Task4.prototype.dragCamera = function(dy) {

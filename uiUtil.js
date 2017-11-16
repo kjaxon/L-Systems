@@ -21,7 +21,7 @@ Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback
     this.sliderHandle.className = "slider-handle";
     this.sliderBackground.appendChild(this.sliderHandle);
     
-    var mouseMoveListener = this.mouseMove.bind(this);
+    var mouenerseMoveList = this.mouseMove.bind(this);
     function mouseUpListener(event) {
         document.removeEventListener("mousemove", mouseMoveListener);
         document.removeEventListener("mouseup", mouseUpListener);
@@ -67,7 +67,7 @@ Slider.prototype.setValue = function(value) {
     }
 }
 
-sSlider.prototype.setPosition = function(position) {
+Slider.prototype.setPosition = function(position) {
     this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
 }
 
