@@ -1,41 +1,56 @@
 //TODO: add INPUT constructor here, follow the outline of the Slider below, I think the important inputs
 // to input is the targetId, hasLabel, and callback function
+Input = function(targetId, callback) {
+	var target = document.getElementById(targetId);
+	if (!target)
+		return;
+
+	this.callback = callback;
+
+
+}
+
+Input.prototype.setValue = function(value) {
+
+	if (this.callback)
+		this.callback(value);
+}
 
 Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback) {
     var target = document.getElementById(targetId);
     if (!target)
         return;
-        
+
     this.sliderBackground = document.createElement("div");
     this.sliderBackground.className = "slider";
-    
+
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.callback = callback;
-    
+
     this.sliderBar = document.createElement("div");
     this.sliderBar.className = "slider-bar";
     this.sliderBackground.appendChild(this.sliderBar);
-    
+
     this.sliderHandle = document.createElement("a");
     this.sliderHandle.className = "slider-handle";
     this.sliderBackground.appendChild(this.sliderHandle);
-    
+
     var mouseMoveListener = this.mouseMove.bind(this);
     function mouseUpListener(event) {
         document.removeEventListener("mousemove", mouseMoveListener);
         document.removeEventListener("mouseup", mouseUpListener);
     }
-    
+
     this.sliderHandle.addEventListener("mousedown", function(event) {
         event.preventDefault();
         document.addEventListener("mousemove", mouseMoveListener);
         document.addEventListener("mouseup", mouseUpListener);
     });
-    
+
     var parent = target.parentNode;
     parent.replaceChild(this.sliderBackground, target);
-    
+
     if (hasLabel) {
         this.label = document.createElement("p");
         this.label.className = "slider-label";
@@ -61,7 +76,7 @@ Slider.prototype.setValue = function(value) {
         this.value = value;
         var percentage = Math.max(Math.min(Math.floor(100.0*(value - this.minValue)/(this.maxValue - this.minValue)), 100.0), 0.0);
         this.sliderHandle.style.left = this.sliderBar.style.width = percentage.toString() + "%";
-        
+
         if (this.callback)
             this.callback(value);
     }

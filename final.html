@@ -74,8 +74,12 @@
 
             <div class="canvas-container">
                 <canvas id="task-4" width="820" height="461"></canvas>
-                <div class="slider-container"><div id="hip-rotation"></div></div>
-                <div class="slider-container"><div id="left-hip-angle"></div></div>
+				<div>
+				Axiom: <input type="text" name="axiom"><br>
+				P-Function: <input type="text" name="pfunc"> 
+				<input type="submit">
+				</form>
+				</div>
                 <div class="slider-container"><div id="left-knee-angle"></div></div>
                 <div class="slider-container"><div id="left-ankle-angle"></div></div>
             </div>
@@ -91,17 +95,11 @@
 
             var task4 = setupTask("task-4", Task4);
 
+
 // TODO: Construct new Input() here ... define Input in uiUtil.js
 
 
-            new Slider("hip-rotation", -90, 90, 0, true, function(angle) {
-                this.setLabel("Hip rotation: " + angle + " deg");
-                task4.setJointAngle(0, angle);
-            });
-            new Slider("left-hip-angle", -160, 20, 0, true, function(angle) {
-                this.setLabel("Hip angle: " + angle + " deg");
-                task4.setJointAngle(1, angle);
-            });
+
             new Slider("left-knee-angle", 0, 160, 0, true, function(angle) {
                 this.setLabel("Knee angle: " + angle + " deg");
                 task4.setJointAngle(2, angle);
