@@ -1,5 +1,12 @@
 // TODO: store data and do all the computation such as production here.
 // axiom should be a string, rules should be a dictionary, look at sketch.js to see how things are stored
+// var inputs = document.getElementById("allInputs");
+var dict = {};
+var axiom = null;
+
+var isEmpty = function(obj) {
+	return Object.keys(obj).length === 0;
+}
 
 var Lsystem = function(axiom, rules, angle, iterations) {
     this.axiom = axiom;
@@ -16,7 +23,7 @@ Lsystem.prototype.generateString = function() {
         var acc = "";
         for (var j  = 0; j < axiomAtLevel.length; j++) {
             var curr = axiomAtLevel.charAt(j);
-            if ( curr in this.rules) {
+            if (curr in this.rules) {
                 acc+=this.rules[curr];
             } else {
                 acc+=curr;
@@ -45,7 +52,19 @@ Lsystem.prototype.draw = function(canvas, w, h) {
             turtle.pop();
         }
     }
+}
 
+function setAxiom() {
+	axiom = document.getElementById("ax").value;
+}
+
+function makeDict() {
+	console.log("here");
+	var str = document.getElementById("pfunc").value;
+	var splits = str.split(":");
+	var axiom = splits[0];
+	var rule = splits[1];
+	dict[axiom] = rule;
 }
 
 var Bone = function(parent, position, scale, jointLocation, jointAxis) {
@@ -106,20 +125,23 @@ Task4.prototype.setJointAngle = function(boneIndex, angle) {
 }
 
 Task4.prototype.render = function(canvas, w, h) {
+
     var context = canvas.getContext('2d');
     clear(context, w, h);
-    // TODO: replace this with the actual l system
-    var axiom = "F-F-F-F";
-    var rule = {
-        'F': "FF-F-F-F-F-F+F"
-    };
-
-    var lsystem = new Lsystem(axiom, rule, 90, 4);
+	// TODO: replace this with the actual l system
+    // var axiom = "F-F-F-F";
+    // var rule = {
+    //     'F': "FF-F-F-F-F-F+F"
+    // };
+    //
+	if (axiom != null && !isEmpty(dict)) {
+    var lsystem = new Lsystem(axiom, dict, 90, 4);
     this.setLsystem(lsystem);
     this.lsystem.generateString();
-    console.log(this.lsystem.lstring);
+	console.log(lsystem.rules);
+	console.log(lsystem.axiom);
     this.lsystem.draw(canvas, w, h);
-
+}
     // var cameraView = SimpleMatrix.rotate(this.cameraAngle, 1, 0, 0);
     // var view = SimpleMatrix.translate(0, 0, -10);
     // view = SimpleMatrix.multiply(view, cameraView);

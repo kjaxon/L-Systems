@@ -1,20 +1,20 @@
 //TODO: add INPUT constructor here, follow the outline of the Slider below, I think the important inputs
 // to input is the targetId, hasLabel, and callback function
-Input = function(targetId, callback) {
-	var target = document.getElementById(targetId);
-	if (!target)
-		return;
-
-	this.callback = callback;
-
-
-}
-
-Input.prototype.setValue = function(value) {
-
-	if (this.callback)
-		this.callback(value);
-}
+// Input = function(axiom) {
+// 	 var target = document.getElementById(targetId);
+// 	 if (!target)
+// 	 	return;
+// 	this.axiom = " ";
+// 	this.dict = [];
+// }
+//
+// Input.prototype.makeDict = function() {
+//
+// }
+//
+// Input.prototype.returnInputs = function() {
+// 		return new Input();
+// }
 
 Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback) {
     var target = document.getElementById(targetId);
@@ -35,13 +35,8 @@ Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback
     this.sliderHandle = document.createElement("a");
     this.sliderHandle.className = "slider-handle";
     this.sliderBackground.appendChild(this.sliderHandle);
-<<<<<<< HEAD
 
     var mouseMoveListener = this.mouseMove.bind(this);
-=======
-    
-    var mouenerseMoveList = this.mouseMove.bind(this);
->>>>>>> 054cbe2b9b5da80fbc433b5e20cf6f956aded804
     function mouseUpListener(event) {
         document.removeEventListener("mousemove", mouseMoveListener);
         document.removeEventListener("mouseup", mouseUpListener);
@@ -62,7 +57,7 @@ Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback
         parent.insertBefore(this.label, this.sliderBackground.nextSibling);
     }
 
-    this.setPosition((initialValue - minValue)/(maxValue - minValue));
+//     this.setPosition((initialValue - minValue)/(maxValue - minValue));
 }
 
 Slider.prototype.mouseMove = function(event) {
@@ -87,9 +82,9 @@ Slider.prototype.setValue = function(value) {
     }
 }
 
-Slider.prototype.setPosition = function(position) {
-    this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
-}
+// sSlider.prototype.setPosition = function(position) {
+//     this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
+// }
 
 Slider.prototype.show = function(show) {
     var display = show ? "block" : "none";
