@@ -32,6 +32,16 @@ canvas {
     margin: 40px auto;
 }
 
+.define {
+    display: flex;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+.custom-define {
+    margin-top: 4px;
+}
+
 .slider-container {
     margin: 10px auto;
     padding: 0 10px;

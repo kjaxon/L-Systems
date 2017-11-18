@@ -3,11 +3,7 @@ var Turtle = function(x, y, headAngle, context) {
     this.x = x;
     this.y = y;
     this.ctx = context;
-    this.lastPosition = {
-        x: this.x,
-        y: this.y,
-        headAngle: this.headAngle,
-    };
+    this.stack = [];
 
 }
 
@@ -23,11 +19,11 @@ Turtle.prototype.forward = function(length) {
 }
 
 Turtle.prototype.turnLeft = function(angle) {
-    this.turn(angle);
+    this.turn(-angle);
 }
 
 Turtle.prototype.turnRight = function(angle) {
-    this.turn(-angle);
+    this.turn(angle);
 }
 
 Turtle.prototype.turn = function(angle) {
@@ -35,15 +31,16 @@ Turtle.prototype.turn = function(angle) {
 }
 
 Turtle.prototype.push = function() {
-    this.lastPosition = {
+    this.stack.push({
         x: this.x,
         y: this.y,
         headAngle: this.headAngle
-    };
+    });
 }
 
 Turtle.prototype.pop = function() {
-    this.x = this.lastPosition.x;
-    this.y = this.lastPosition.y;
-    this.headAngle = this.lastPosition.headAngle;
+    var lastPosition = this.stack.pop();
+    this.x = lastPosition.x;
+    this.y = lastPosition.y;
+    this.headAngle = lastPosition.headAngle;
 }

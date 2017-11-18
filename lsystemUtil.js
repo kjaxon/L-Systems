@@ -14,7 +14,8 @@ var p2 =  {
     },
     angle: 90,
     n: 4
-}
+};
+
 
 var st = {
     axiom: "R",
@@ -24,5 +25,32 @@ var st = {
     },
     angle: 60,
     n: 6
+}
+
+var sb = {
+    axiom: "F",
+    rules: {
+        "F": "F[+F]F[-F]F"
+    },
+    angle: 30,
+    n: 5
+}
+
+var tree1 = {
+    axiom: "F",
+    rules: {
+        "F": "F[+F]F[-F]F"
+    },
+    angle: 25.7,
+    n: 5
+}
+
+var tree2 = {
+    axiom: "F",
+    rules: {
+        "F": "F[+F]F[-F][F]"
+    },
+    angle: 20,
+    n: 5
 }
 

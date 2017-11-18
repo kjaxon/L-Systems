@@ -65,31 +65,42 @@
 
             <div class="canvas-container">
                 <canvas id="task-4" width="820" height="461"></canvas>
-				<div>
+				<div class = "define">
                    <div>
                       L-System model: <select onchange="lsystemSetup.setLsystem(this.value)">
                            <option value="custom"></option>
                            <option value="p1">Pattern 1</option>
                            <option value="p2">Pattern 2</option>
                            <option value="st">Sierpinski</option>
+                           <option value="sb">Simple Branching</option>
+                           <option value="tree1">Tree 1 </option>
+                           <option value="tree2">Tree 2</option>
                        </select>
+                       <div class="custom-define">
+                           <form id="form1" onsubmit="return false;">
+                               Axiom: <input type="text" id="ax" />
+                               <input type="submit" onclick="setDefinedAxiom();"/>
+                           </form>
+                           <form id="form2" onsubmit="return false;">
+                               P-Function: <input type="text" id="pfunc" />
+                               <input type="submit" onclick="addDefinedRule();" />
+                               <div>
+                                   <input type="submit" value="Define custom L-System"
+                                          onclick="lsystemSetup.makeCustomRules();" />
+                               </div>
+                               <div>
+                                   <input type="reset" onclick="lsystemSetup.reset();" />
+                               </div>
+                           </form>
+                       </div>
                    </div>
-                    OR
-                    <form id="form1" onsubmit="return false;">
-                        Axiom: <input type="text" id="ax" />
-                        <input type="submit" onclick="setDefinedAxiom();"/>
-                    </form>
-                    <form id="form2" onsubmit="return false;">
-                        P-Function: <input type="text" id="pfunc" />
-                        <input type="submit" onclick="addDefinedRule();" />
+                    <div class="display">
                         <div>
-                            <input type="submit" value="Define custom L-System"
-                                   onclick="lsystemSetup.makeCustomRules();" />
+                            <span class="display-axiom"> </span>
+                            <span class="display-rules"> </span>
+
                         </div>
-                        <div>
-                            <input type="reset" onclick="lsystemSetup.reset();" />
-                        </div>
-                    </form>
+                    </div>
 				</div>
                 <div class="slider-container"><div id="left-ankle-angle"></div></div>
             </div>

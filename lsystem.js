@@ -4,13 +4,13 @@
 var dict = {};
 var axiom = "";
 var angle = 90;
-n = 4;
+n = 2;
 
 var isEmpty = function(obj) {
 	return Object.keys(obj).length === 0;
 }
 
-var isLetter = function(character ){
+var isSymbol = function(character ){
     return character != "+" && character != "-"
         && character != "[" && character != "]";
 }
@@ -30,17 +30,22 @@ Lsystem.prototype.generateString = function() {
         var acc = "";
         for (var j  = 0; j < axiomAtLevel.length; j++) {
             var curr = axiomAtLevel.charAt(j);
-            if (curr in this.rules) {
-                acc+=this.rules[curr];
-            } else {
-                acc+=curr;
+            if (isSymbol(curr)) {
+                if (curr in this.rules) {
+                    acc+=this.rules[curr];
+                    continue;
+                }
             }
+            acc+=curr;
         }
         axiomAtLevel = acc;
     }
     this.lstring = axiomAtLevel;
 }
 
+Lsystem.prototype.rulesToString = function() {
+    return '';
+}
 
 Lsystem.prototype.draw = function(canvas, w, h) {
     var context = canvas.getContext('2d');
@@ -55,7 +60,7 @@ Lsystem.prototype.draw = function(canvas, w, h) {
             turtle.push();
         } else if (letter == "]") {
             turtle.pop();
-        } else if (isLetter(letter)){
+        } else if (isSymbol(letter)){
             turtle.forward(this.length);
         }
     }
@@ -100,6 +105,12 @@ LsystemSetup.prototype.setLsystem = function(type) {
             model = p2;
         } else if (type == "st") {
             model = st;
+        } else if (type == "tree1") {
+            model = tree1;
+        } else if (type == "tree2") {
+            model = tree2;
+        } else if (type == "sb") {
+            model = sb;
         }
         this.lsystem = new Lsystem(model.axiom, model.rules, model.angle, model.n);
     }
@@ -124,6 +135,8 @@ LsystemSetup.prototype.render = function(canvas, w, h) {
         console.log(this.lsystem.rules);
         console.log(this.lsystem.axiom);
         this.lsystem.draw(canvas, w, h);
+        document.querySelector('.display-axiom').innerHTML = 'Axiom: ' + this.lsystem.axiom;
+        document.querySelector('.display-rules').innerHTML = 'Rules: ' + this.lsystem.rulesToString();
     }
 }
 
