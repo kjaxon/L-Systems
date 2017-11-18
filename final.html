@@ -19,8 +19,9 @@
     <script src="task1.js"></script>
     <script src="task2.js"></script>
     <script src="task3.js"></script>
-	<script src="task4.js"></script>
+	<script src="lsystem.js"></script>
 	<script src="turtle.js"></script>
+	<script src="lsystemUtil.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,61 +32,64 @@
 
 <body onload="setupAssignment();">
     <div class="container headerBar">
-        <h1>Programming Assignment 0 - Larissa Chen</h1>
+        <h1>Final Project Larissa Chen and Khalil Jackson </h1>
     </div>
     <div class="container contentWrapper">
         <div class="pageContent">
             <!-- ================================================================= -->
 
-            <h2>Task 1</h2>
+            <!--<h2>Task 1</h2>-->
 
-            <p> Represents the simple perspective projection of an orthographic projection.
-            To do this, I divided the x and y coordinates by the z coordinate.</p>
+            <!--<p> Represents the simple perspective projection of an orthographic projection.-->
+            <!--To do this, I divided the x and y coordinates by the z coordinate.</p>-->
 
-            <div class="canvas-container">
-                <canvas id="task-1" width="820" height="461"></canvas>
-            </div>
+            <!--<div class="canvas-container">-->
+                <!--<canvas id="task-1" width="820" height="461"></canvas>-->
+            <!--</div>-->
 
-            <!-- ================================================================= -->
+            <!--&lt;!&ndash; ================================================================= &ndash;&gt;-->
 
-            <h2>Task 2</h2>
+            <!--<h2>Task 2</h2>-->
 
-            <p> Represents the scale, rotate, and translate transform matrices. I applied these transform matrices
-            to the coordinates using the multiplyVector function. </p>
+            <!--<p> Represents the scale, rotate, and translate transform matrices. I applied these transform matrices-->
+            <!--to the coordinates using the multiplyVector function. </p>-->
 
-            <div class="canvas-container">
-                <canvas id="task-2" width="820" height="461"></canvas>
-            </div>
+            <!--<div class="canvas-container">-->
+                <!--<canvas id="task-2" width="820" height="461"></canvas>-->
+            <!--</div>-->
 
-            <!-- ================================================================= -->
-
-            <h2>Task 3</h2>
-
-            <p> In order to do this animation, I transform the original system by rotating, then translating the point to the
-            origin, then translating back to the point again. </p>
-
-            <div class="canvas-container">
-                <canvas id="task-3" width="820" height="461"></canvas>
-            </div>
 
             <!-- ================================================================= -->
 
-            <h2>Task 4</h2>
-
-            <p> In this task, I computed the pose matrix and model matrix and drew those. </p>
+            <h2> L systems</h2>
 
             <div class="canvas-container">
                 <canvas id="task-4" width="820" height="461"></canvas>
 				<div>
-				<form id="form1" onsubmit="return false;">
-					Axiom: <input type="text" id="ax" />
-	    			<input type="submit" onclick="setAxiom();"/>
-				</form>
-				<form id="form2" onsubmit="return false;">
-					P-Function: <input type="text" id="pfunc" />
-					<input type="submit" onclick="makeDict();" />
-					<input type="reset" onclick="getInputs();" />
-				</form>
+                   <div>
+                      L-System model: <select onchange="lsystemSetup.setLsystem(this.value)">
+                           <option value="custom"></option>
+                           <option value="p1">Pattern 1</option>
+                           <option value="p2">Pattern 2</option>
+                           <option value="st">Sierpinski</option>
+                       </select>
+                   </div>
+                    OR
+                    <form id="form1" onsubmit="return false;">
+                        Axiom: <input type="text" id="ax" />
+                        <input type="submit" onclick="setDefinedAxiom();"/>
+                    </form>
+                    <form id="form2" onsubmit="return false;">
+                        P-Function: <input type="text" id="pfunc" />
+                        <input type="submit" onclick="addDefinedRule();" />
+                        <div>
+                            <input type="submit" value="Define custom L-System"
+                                   onclick="lsystemSetup.makeCustomRules();" />
+                        </div>
+                        <div>
+                            <input type="reset" onclick="lsystemSetup.reset();" />
+                        </div>
+                    </form>
 				</div>
                 <div class="slider-container"><div id="left-ankle-angle"></div></div>
             </div>
@@ -94,24 +98,23 @@
         </div>
     </div>
     <script>
-		var inputs;
+        var lsystemSetup = null;
         function setupAssignment() {
-            setupTask("task-1", Task1);
-            setupTask("task-2", Task2);
-            setupTask("task-3", Task3);
+//            setupTask("task-1", Task1);
+//            setupTask("task-2", Task2);
+//            setupTask("task-3", Task3);
 
-            var task4 = setupTask("task-4", Task4);
+            lsystemSetup = setupTask("task-4", LsystemSetup);
 
 // TODO: Construct new Input() here ... define Input in uiUtil.js
 
-            // new Slider("left-knee-angle", 0, 160, 0, true, function(angle) {
-            //     this.setLabel("Knee angle: " + angle + " deg");
-            //     task4.setJointAngle(2, angle);
-            // });
-            // new Slider("left-ankle-angle", -30, 90, 0, true, function(angle) {
-            //     this.setLabel("Ankle angle: " + angle + " deg");
-            //     task4.setJointAngle(3, angle);
-            // });
+//             new Slider("left-knee-angle", 0, 160, 0, true, function(angle) {
+//                 this.setLabel("Knee angle: " + angle + " deg");
+//             });
+//             new Slider("left-ankle-angle", -30, 90, 0, true, function(angle) {
+//                 this.setLabel("Ankle angle: " + angle + " deg");
+//                 task4.setJointAngle(3, angle);
+//             });
 
         }
 </script>

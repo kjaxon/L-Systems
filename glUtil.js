@@ -47,3 +47,9 @@ function setupTask(canvasId, taskFunction) {
 
     return task;
 }
+
+function clear(context, w, h)
+{
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, w, h);
+}

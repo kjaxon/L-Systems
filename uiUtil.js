@@ -8,7 +8,7 @@
 // 	this.dict = [];
 // }
 //
-// Input.prototype.makeDict = function() {
+// Input.prototype.addDefinedRule = function() {
 //
 // }
 //
@@ -57,7 +57,7 @@ Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback
         parent.insertBefore(this.label, this.sliderBackground.nextSibling);
     }
 
-//     this.setPosition((initialValue - minValue)/(maxValue - minValue));
+    this.setPosition((initialValue - minValue)/(maxValue - minValue));
 }
 
 Slider.prototype.mouseMove = function(event) {
@@ -82,9 +82,9 @@ Slider.prototype.setValue = function(value) {
     }
 }
 
-// sSlider.prototype.setPosition = function(position) {
-//     this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
-// }
+Slider.prototype.setPosition = function(position) {
+    this.setValue(Math.floor(this.minValue + position*(this.maxValue - this.minValue)));
+}
 
 Slider.prototype.show = function(show) {
     var display = show ? "block" : "none";
@@ -92,3 +92,6 @@ Slider.prototype.show = function(show) {
     if (this.label)
         this.label.style.display = display;
 }
+
+
+
