@@ -32,7 +32,7 @@
 
 <body onload="setupAssignment();">
     <div class="container headerBar">
-        <h1>Final Project Larissa Chen and Khalil Jackson </h1>
+        <h3>Final Project Larissa Chen and Khalil Jackson </h3>
     </div>
     <div class="container contentWrapper">
         <div class="pageContent">
@@ -64,45 +64,68 @@
             <h2> L systems</h2>
 
             <div class="canvas-container">
-                <canvas id="task-4" width="820" height="461"></canvas>
-				<div class = "define">
-                   <div>
-                      L-System model: <select onchange="lsystemSetup.setLsystem(this.value)">
-                           <option value="custom"></option>
-                           <option value="p1">Pattern 1</option>
-                           <option value="p2">Pattern 2</option>
-                           <option value="st">Sierpinski</option>
-                           <option value="sb">Simple Branching</option>
-                           <option value="tree1">Tree 1 </option>
-                           <option value="tree2">Tree 2</option>
-                       </select>
-                       <div class="custom-define">
-                           <form id="form1" onsubmit="return false;">
-                               Axiom: <input type="text" id="ax" />
-                               <input type="submit" onclick="setDefinedAxiom();"/>
-                           </form>
-                           <form id="form2" onsubmit="return false;">
-                               P-Function: <input type="text" id="pfunc" />
-                               <input type="submit" onclick="addDefinedRule();" />
+                <canvas id="task-4" width="1100" height="461"></canvas>
+                <div class = "edit">
+                    <div class = "define">
+                       <div>
+                          L-System model: <select onchange="lsystemSetup.setLsystem(this.value)">
+                               <option value="custom"></option>
+                               <option value="koch">Koch Curve</option>
+                               <option value="p2">Pattern 2</option>
+                               <option value="st">Sierpinski</option>
+                               <option value="sb">Simple Branching</option>
+                               <option value="tree1">Tree 1 </option>
+                               <option value="tree2">Tree 2</option>
+                               <option value="stoch1">Stochastic 1</option>
+                           </select>
+                           <div class="custom-define">
                                <div>
-                                   <input type="submit" value="Define custom L-System"
-                                          onclick="lsystemSetup.makeCustomRules();" />
+                                   <form   onsubmit="return false;">
+                                       Axiom: <input type="text" id="ax" />
+                                       <input type="submit" onclick="setCustomAxiom();"/>
+                                    </form>
+                                   <form  onsubmit="return false;">
+                                       P-Function: <input type="text" id="pfunc" />
+                                       <input type="submit" value="Add rule" onclick="addCustomRule();" />
+                                       <div>
+                                           <input class="submit-button" type="submit" value="Make custom l-system"
+                                                  onclick="lsystemSetup.setCustom();" />
+                                       </div>
+                                   </form>
                                </div>
                                <div>
-                                   <input type="reset" onclick="lsystemSetup.reset();" />
+                                   <form  onsubmit="return false;">
+                                   Axiom: <input type="text" id="ax-stochastic" />
+                                   <input type="submit" onclick="setCustomAxiomStochastic();"/>
+                               </form>
+                                   <form id="form2" onsubmit="return false;">
+                                       P-Function: <input type="text" id="pfunc-stochastic" />
+                                       <input type="submit" value="Add stochastic rule" onclick="addCustomStochasticRule();" />
+                                       <div>
+                                           <input class = "submit-button" type="submit" value="Make stochastic l-system"
+                                                  onclick="lsystemSetup.setCustom();" />
+                                       </div>
+                                   </form>
                                </div>
-                           </form>
+                           </div>
                        </div>
-                   </div>
-                    <div class="display">
-                        <div>
-                            <span class="display-axiom"> </span>
-                            <span class="display-rules"> </span>
+                        <div class="display">
+                            <div>
+                                <p> L-system Definition: </p>
+                                <div class="display-axiom"> </div>
+                                <div class="display-rules"> </div>
+                                <div class="display-angle"> </div>
+                                <div class="display-length"> </div>
+                                <div class="display-n"> </div>
 
+                            </div>
                         </div>
                     </div>
-				</div>
-                <div class="slider-container"><div id="left-ankle-angle"></div></div>
+                    <div class="slider-container"><div id="n"></div></div>
+                    <div class="slider-container"><div id="length"></div></div>
+                    <div class="slider-container"><div id="angle"></div></div>
+                    <input type="reset" onclick="lsystemSetup.reset();" />
+                </div>
             </div>
 
             <!-- ================================================================= -->
@@ -117,15 +140,18 @@
 
             lsystemSetup = setupTask("task-4", LsystemSetup);
 
-// TODO: Construct new Input() here ... define Input in uiUtil.js
-
-//             new Slider("left-knee-angle", 0, 160, 0, true, function(angle) {
-//                 this.setLabel("Knee angle: " + angle + " deg");
-//             });
-//             new Slider("left-ankle-angle", -30, 90, 0, true, function(angle) {
-//                 this.setLabel("Ankle angle: " + angle + " deg");
-//                 task4.setJointAngle(3, angle);
-//             });
+            new Slider("n", 0, 10, 0, true, function(n) {
+                this.setLabel("Iterations: " + n );
+                lsystemSetup.setIterations(n);
+            });
+            new Slider("length", 0, 30, 0, true, function(n) {
+                this.setLabel("Length: " + n + " px" );
+                lsystemSetup.setLength(n);
+            });
+             new Slider("angle", 0, 180, 0, true, function(angle) {
+                 this.setLabel("Angle: " + angle + " deg");
+                 lsystemSetup.setAngle(angle);
+             });
 
         }
 </script>

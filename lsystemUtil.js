@@ -1,4 +1,4 @@
-var p1 = {
+var koch = {
     axiom: "F-F-F-F ",
     rules: {
         "F": "FF-F-F-F-F-F+F"
@@ -49,6 +49,19 @@ var tree2 = {
     axiom: "F",
     rules: {
         "F": "F[+F]F[-F][F]"
+    },
+    angle: 20,
+    n: 5
+}
+
+var stoch1 = {
+    axiom: "F",
+    rules: {
+        "F": [
+            "F[+F]F[-F]F",
+            "F[+F]F",
+            "F[-F]F"
+        ]
     },
     angle: 20,
     n: 5

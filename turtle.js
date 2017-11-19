@@ -18,16 +18,17 @@ Turtle.prototype.forward = function(length) {
     this.ctx.stroke();
 }
 
-Turtle.prototype.turnLeft = function(angle) {
-    this.turn(-angle);
+Turtle.prototype.turnLeft = function(angleInDegrees) {
+    this.turn(-angleInDegrees);
 }
 
-Turtle.prototype.turnRight = function(angle) {
-    this.turn(angle);
+Turtle.prototype.turnRight = function(angleInDegrees) {
+    this.turn(angleInDegrees);
 }
 
-Turtle.prototype.turn = function(angle) {
-    this.headAngle += angle;
+Turtle.prototype.turn = function(angleInDegrees) {
+    var angleInRadians = Math.PI/180 * angleInDegrees;
+    this.headAngle += angleInRadians;
 }
 
 Turtle.prototype.push = function() {

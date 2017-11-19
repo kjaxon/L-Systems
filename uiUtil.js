@@ -1,21 +1,3 @@
-//TODO: add INPUT constructor here, follow the outline of the Slider below, I think the important inputs
-// to input is the targetId, hasLabel, and callback function
-// Input = function(axiom) {
-// 	 var target = document.getElementById(targetId);
-// 	 if (!target)
-// 	 	return;
-// 	this.axiom = " ";
-// 	this.dict = [];
-// }
-//
-// Input.prototype.addDefinedRule = function() {
-//
-// }
-//
-// Input.prototype.returnInputs = function() {
-// 		return new Input();
-// }
-
 Slider = function(targetId, minValue, maxValue, initialValue, hasLabel, callback) {
     var target = document.getElementById(targetId);
     if (!target)

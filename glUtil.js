@@ -7,7 +7,7 @@ function setupTask(canvasId, taskFunction) {
 
     var renderWidth, renderHeight;
     function computeCanvasSize() {
-        renderWidth = Math.min(canvas.parentNode.clientWidth - 20, 820);
+        renderWidth = canvas.parentNode.clientWidth - 20;
         renderHeight = Math.floor(renderWidth*9.0/16.0);
         canvas.width = renderWidth;
         canvas.height = renderHeight;
